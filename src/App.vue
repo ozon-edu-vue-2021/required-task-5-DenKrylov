@@ -1,16 +1,62 @@
 <template>
   <div id="app">
+    <header class="app__header">
+      <div class="header__fil">
+        <h1
+        class="header__head"
+        @click="isStore = true"
+      >
+        Мой магазин
+      </h1>
+      <button 
+        class="header__button"
+        @click="isStore = !isStore">
+        <img v-i=""
+          src="/assets/ico/shopping_cart_white_24dp.svg"
+          alt="Корзина"
+        >
+      </button>
+      </div>
+    </header>
+    <div class="app__body">
+      <Basket v-if="!isStore" />
+      <Showcase v-else />
+    </div>
+    <div>{{ basket }}</div>
   </div>
 </template>
 
 <script>
+import Showcase from "@/components/Showcase.vue"
+import Basket from "@/components/Basket.vue"
+import { mapState } from 'vuex';
+import axios from 'axios';
 
 export default {
   name: "App",
-  components: {
-    Form,
+  async created() {
+    await this.loadData();
   },
-};
+  components: {
+    Showcase,
+    Basket,
+  },
+  computed: {
+    ...mapState(['url', 'data', 'basket, writeData()']),
+  },
+  data() {
+    return {
+      isStore: true,
+    }
+  },
+  methods: {
+    async loadData() {
+      const res = await axios.get(this.url);
+      console.log(res.data);
+      this.writeData(res.data);
+    }
+  }
+}
 </script>
 
 <style>
@@ -18,17 +64,53 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
   background-color: #fafafa;
-  padding: 24px;
   box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }
 
 html,
 body,
 #app {
+  background: rgb(44, 62, 80);
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  color: rgb(255, 255, 255);
+}
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80px;
+  background: rgba(0, 0, 0, .3);
+  cursor: pointer;
+}
+.header__fil {
+  display: flex;
+  justify-content: space-between;
+  width: 1500px;
+}
+.header__button {
+  color: rgb(255, 255, 255);
+  background: none;
+  border: none;
+  width: 100px;
+  cursor: pointer;
+}
+.header__button:hover {
+  color: rgb(0, 128, 0)
+}
+.app__body {
+  flex: 1 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: rgba(0, 0, 0, .1);
 }
 
-* {
-  box-sizing: border-box;
-}
 </style>
