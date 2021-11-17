@@ -34,8 +34,8 @@ import axios from 'axios';
 
 export default {
   name: "App",
-  async created() {
-    await this.loadData();
+  created() {
+    this.loadData();
   },
   components: {
     Showcase,
@@ -87,7 +87,7 @@ body,
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 80px;
+  min-height: 80px;
   background: rgba(0, 0, 0, .3);
   cursor: pointer;
 }

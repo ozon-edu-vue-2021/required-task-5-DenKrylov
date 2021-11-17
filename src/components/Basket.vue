@@ -4,10 +4,13 @@
       <li
         class="position"
         v-for="position in basket"
-        v-bind:key="position.id"
+        v-bind:key="position.uid"
       >
-        <img v-bind:src="position.photoUrl">
-        <p>{{ position.name }}</p>
+        <img 
+          class="position__image"
+          src="https://cdn1.ozone.ru/s3/multimedia-l/6050627109.jpg"
+        >
+        <p>{{ position.dish }}</p>
         <div class="position__number">
           <button
             class="position__button"
@@ -65,6 +68,11 @@ export default {
   border-top: 1px solid rgba(0, 0, 0, .1);
 	height: 200px;
 	width: 1360px;
+}
+
+.position__image {
+  margin-left: 50px;
+  height: 150px;
 }
 .position__number {
   display: flex;

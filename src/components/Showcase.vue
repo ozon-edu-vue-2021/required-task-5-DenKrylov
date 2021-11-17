@@ -3,11 +3,12 @@
       <li
         class="card"
         v-for="card in data"
-        v-bind:key="card.id"
+        v-bind:key="card.uid"
       >
         <img
           class="card__image" 
-          src="https://cdn1.ozone.ru/s3/multimedia-l/6050627109.jpg">
+          src="https://cdn1.ozone.ru/s3/multimedia-l/6050627109.jpg"
+        >
         <p>{{ card.dish}}</p>
         <p>{{ randomPrice() }} руб</p>
         <button
@@ -29,14 +30,8 @@ export default {
   },
   methods: {
     addBasket(card) {
-      for(let i = 0; i < this.basket.length; i++) {
-        if(card.id == this.basket[i].id) {
-          this.basket[i].number += 1;
-          return;
-        }
-      }
-      card.number = 1;
-      this.basket.push(card);
+      this.$store.commit('writeBasket', card);
+      console.log(this.basket);
     },
     randomPrice() {
       return Math.floor(Math.random() * (200 - 50 + 1)) + 50;
