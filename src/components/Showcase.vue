@@ -2,12 +2,14 @@
     <ul class="showcase">
       <li
         class="card"
-        v-for="card in cards"
+        v-for="card in data"
         v-bind:key="card.id"
       >
-        <img v-bind:src="card.photoUrl">
-        <p>{{ card.price }} руб</p>
-        <p>{{ card.name}}</p>
+        <img
+          class="card__image" 
+          src="https://cdn1.ozone.ru/s3/multimedia-l/6050627109.jpg">
+        <p>{{ card.dish}}</p>
+        <p>{{ randomPrice() }} руб</p>
         <button
           class="card__button"
           @click="addBasket(card)"
@@ -23,7 +25,7 @@ import { mapState } from 'vuex';
 
 export default {
   computed: {
-    ...mapState(['cards', 'basket']),
+    ...mapState(['data', 'basket']),
   },
   methods: {
     addBasket(card) {
@@ -35,6 +37,9 @@ export default {
       }
       card.number = 1;
       this.basket.push(card);
+    },
+    randomPrice() {
+      return Math.floor(Math.random() * (200 - 50 + 1)) + 50;
     }
   }
 }
@@ -58,6 +63,10 @@ export default {
   background: rgba(0, 0, 0, .1);
   border-radius: 10px;
 }
+.card__image {
+  height: 330px;
+  border-radius: 10px;
+}
 .card__button {
   height: 30px;
   width: 120px;
@@ -66,9 +75,6 @@ export default {
   font-weight: 700;
   border: none;
   border-radius: 2px;
-}
-.card img {
-  border-radius: 10px;
 }
 .card__button:hover {
   cursor: pointer;

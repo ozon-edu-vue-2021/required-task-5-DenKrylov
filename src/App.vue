@@ -53,8 +53,8 @@ export default {
   methods: {
     async loadData() {
       const res = await axios.get(this.url);
-      console.log(res.data);
-      // this.writeData(res.data);
+      this.$store.commit('writeData', res.data);
+      console.log(this.data);
     }
   }
 }

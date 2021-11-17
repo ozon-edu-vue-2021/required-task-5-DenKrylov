@@ -10,8 +10,8 @@ export default new Vuex.Store({
     basket: []
   },
   mutations: {
-    writeData(state, str) {
-      state.data = str;
+    writeData: (state, res) => {
+      state.data = res;
     }
   }
 });
