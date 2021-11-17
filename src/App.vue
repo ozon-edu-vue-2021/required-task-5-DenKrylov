@@ -13,7 +13,7 @@
         @click="isStore = !isStore">
         <img v-i=""
           src="/assets/ico/shopping_cart_white_24dp.svg"
-          alt="Корзина"
+          v-bind:alt="showTotal()"
         >
       </button>
       </div>
@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     // ...mapState(['url', 'data', 'basket, writeData()']),
-    ...mapState(['url', 'data'])
+    ...mapState(['url', 'data', 'total'])
   },
   data() {
     return {
@@ -55,6 +55,12 @@ export default {
       const res = await axios.get(this.url);
       this.$store.commit('writeData', res.data);
       console.log(this.data);
+    },
+    showTotal() {
+      if(this.isStore) {
+        return 'Корзина'
+      }
+      return 'Купить за ' + this.total;
     }
   }
 }

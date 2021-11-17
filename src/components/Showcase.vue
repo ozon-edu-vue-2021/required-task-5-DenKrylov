@@ -10,7 +10,7 @@
           src="https://cdn1.ozone.ru/s3/multimedia-l/6050627109.jpg"
         >
         <p>{{ card.dish}}</p>
-        <p>{{ randomPrice() }} руб</p>
+        <p>{{ card.price }} руб</p>
         <button
           class="card__button"
           @click="addBasket(card)"
@@ -31,11 +31,7 @@ export default {
   methods: {
     addBasket(card) {
       this.$store.commit('writeBasket', card);
-      console.log(this.basket);
     },
-    randomPrice() {
-      return Math.floor(Math.random() * (200 - 50 + 1)) + 50;
-    }
   }
 }
 </script>

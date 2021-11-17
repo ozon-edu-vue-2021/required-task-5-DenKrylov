@@ -11,24 +11,26 @@
           src="https://cdn1.ozone.ru/s3/multimedia-l/6050627109.jpg"
         >
         <p>{{ position.dish }}</p>
+        <p>{{ position.price }}</p>
         <div class="position__number">
           <button
             class="position__button"
-            @click="decreaseNumber(position)"
+            @click="decNumber(position.uid)"
           >
             -
           </button>
           <p>{{ position.number }}</p>
           <button
             class="position__button"
-            @click="increaseNumber(position)"
+            @click="incNumber(position.uid)"
           >
             +
           </button>
+          <p>{{ position.number * position.price}}</p>
         </div>
-        <p>{{ position.number * position.price}}</p>
       </li>
     </ul>
+    <div>{{ total }} руб</div>
   </div>
 </template>
 
@@ -37,9 +39,15 @@ import { mapState } from 'vuex';
 
 export default {
   computed: {
-    ...mapState(['basket']),
+    ...mapState(['basket', 'total']),
   },
   methods: {
+    incNumber(uid) {
+      this.$store.commit('incNumber', uid);
+    },
+    decNumber(uid) {
+      this.$store.commit('decNumber', uid);
+    },
 	  decreaseNumber(pos) {
 		  if(pos.number > 0) {
 			  pos.number--;
@@ -75,6 +83,7 @@ export default {
   height: 150px;
 }
 .position__number {
+  margin-right: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;

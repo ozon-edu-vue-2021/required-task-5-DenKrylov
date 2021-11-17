@@ -7,11 +7,15 @@ export default new Vuex.Store({
   state: {
     url: 'https://random-data-api.com/api/food/random_food?size=30',
     data: [],
-    basket: []
+    basket: [],
+    total: 0,
   },
   mutations: {
     writeData: (state, res) => {
       state.data = res;
+      for(let i = 0; i < state.data.length; i++) {
+        state.data[i].price = Math.floor(Math.random() * (200 - 50 + 1)) + 50;
+      }
     },
     writeBasket: (state, card) => {
       for(let i = 0; i < state.basket.length; i++) {
@@ -22,6 +26,26 @@ export default new Vuex.Store({
       }
       card.number = 1;
       state.basket.push(card);
-    }
+    },
+    incNumber: (state, uid) => {
+      state.total = 0;
+      for(let i = 0; i < state.basket.length; i++) {
+        if(uid === state.basket[i].uid &&
+          state.basket[i].number < 100 ) {
+            state.basket[i].number++;
+          }
+          state.total += state.basket[i].number * state.basket[i].price;
+      }
+    },
+    decNumber: (state, uid) => {
+      state.total = 0;
+      for(let i = 0; i < state.basket.length; i++) {
+        if(state.basket[i].uid === uid &&
+          state.basket[i].number > 0 ) {
+          state.basket[i].number--;
+        }
+        state.total += state.basket[i].number * state.basket[i].price;
+      }
+    },
   }
 });
