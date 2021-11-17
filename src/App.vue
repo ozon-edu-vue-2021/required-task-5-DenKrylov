@@ -22,7 +22,7 @@
       <Basket v-if="!isStore" />
       <Showcase v-else />
     </div>
-    <div>{{ basket }}</div>
+    <!-- <div>{{ basket }}</div> -->
   </div>
 </template>
 
@@ -42,7 +42,8 @@ export default {
     Basket,
   },
   computed: {
-    ...mapState(['url', 'data', 'basket, writeData()']),
+    // ...mapState(['url', 'data', 'basket, writeData()']),
+    ...mapState(['url', 'data'])
   },
   data() {
     return {
@@ -53,7 +54,7 @@ export default {
     async loadData() {
       const res = await axios.get(this.url);
       console.log(res.data);
-      this.writeData(res.data);
+      // this.writeData(res.data);
     }
   }
 }
