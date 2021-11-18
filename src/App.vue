@@ -10,7 +10,7 @@
       </h1>
       <button 
         class="header__button"
-        @click="isStore = !isStore">
+        @click="multiButton()">
         <img v-i=""
           src="/assets/ico/shopping_cart_white_24dp.svg"
           v-bind:alt="showTotal()"
@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     // ...mapState(['url', 'data', 'basket, writeData()']),
-    ...mapState(['url', 'data', 'total'])
+    ...mapState(['url', 'data', 'basket', 'total'])
   },
   data() {
     return {
@@ -61,6 +61,23 @@ export default {
         return 'Корзина'
       }
       return 'Купить за ' + this.total;
+    },
+    multiButton() {
+      let fulSum = "";
+      if(this.isStore) {
+        this.isStore = !this.isStore;
+      } else {
+        for(let i = 0; i < this.basket.length; i++) {
+          fulSum +=
+          "Позиция " + (i + 1) +
+          "\nНаименование - " + this.basket[i].dish +
+          "\nЦена за шт - " + this.basket[i].price + " руб" +
+          "\nКолличество - " + this.basket[i].number + " шт" +
+          "\nЦена за все - " +(this.basket[i].price * this.basket[i].number) + " руб" +
+          "\n\n";
+        }
+        alert(fulSum + "\n" + "Сумма покупки - " +this.total);
+      }
     }
   }
 }

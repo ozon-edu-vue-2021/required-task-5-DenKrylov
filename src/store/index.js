@@ -10,6 +10,11 @@ export default new Vuex.Store({
     basket: [],
     total: 0,
   },
+  getters: {
+    getTotalPrice: (state) => {
+      return state.total;
+    }
+  },
   mutations: {
     writeData: (state, res) => {
       state.data = res;
