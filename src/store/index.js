@@ -24,6 +24,9 @@ export default new Vuex.Store({
       state.data = res;
       for(let i = 0; i < state.data.length; i++) {
         state.data[i].price = Math.floor(Math.random() * (200 - 50 + 1)) + 50;
+        state.data[i].urlImg =  "assets/images/" + 
+          (Math.floor(Math.random() * (12 - 1 + 1)) + 1) +
+          ".webp";
       }
     },
     writeBasket: (state, card) => {

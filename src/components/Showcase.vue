@@ -6,8 +6,8 @@
         v-bind:key="card.uid"
       >
         <img
-          class="card__image" 
-          src="https://cdn1.ozone.ru/s3/multimedia-l/6050627109.jpg"
+          class="card__image"
+          :src="card.urlImg"
         >
         <p>{{ card.dish}}</p>
         <p>{{ card.price }} руб</p>

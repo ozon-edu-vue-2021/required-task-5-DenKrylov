@@ -11,9 +11,8 @@
       <button 
         class="header__button"
         @click="isStore = !isStore">
-        <img
-          v-bind:alt="showTotal()"
-        >
+        <p v-if="isStore">Корзина</p>
+        <p v-else>В магазин</p>
       </button>
       </div>
     </header>
@@ -51,12 +50,6 @@ export default {
     async loadData() {
       const res = await axios.get(this.url);
       this.$store.commit('writeData', res.data);
-    },
-    showTotal() {
-      if(this.isStore) {
-        return "Корзина";
-      }
-      return "В магазин";
     },
   }
 }

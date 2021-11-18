@@ -8,7 +8,7 @@
       >
         <img 
           class="position__image"
-          src="https://cdn1.ozone.ru/s3/multimedia-l/6050627109.jpg"
+          :src="position.urlImg"
         >
         <p class="position__dish">{{ position.dish }}</p>
         <p>{{ position.price }} руб</p>
