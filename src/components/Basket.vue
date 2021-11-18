@@ -10,36 +10,44 @@
           class="position__image"
           src="https://cdn1.ozone.ru/s3/multimedia-l/6050627109.jpg"
         >
-        <p>{{ position.dish }}</p>
-        <p>{{ position.price }}</p>
+        <p class="position__dish">{{ position.dish }}</p>
+        <p>{{ position.price }} руб</p>
         <div class="position__number">
-          <button
-            class="position__button"
-            @click="decNumber(position.uid)"
-          >
-            -
-          </button>
-          <p>{{ position.number }}</p>
-          <button
-            class="position__button"
-            @click="incNumber(position.uid)"
-          >
-            +
-          </button>
+          <div class="position__changeNumber">
+            <button
+              class="position__button"
+              @click="decNumber(position.uid)"
+            >
+              -
+            </button>
+            <p>{{ position.number }}</p>
+            <button
+              class="position__button"
+              @click="incNumber(position.uid)"
+            >
+              +
+            </button>
+          </div>
           <p>{{ position.number * position.price}}</p>
         </div>
       </li>
     </ul>
-    <div>{{ total }} руб</div>
+    <button
+      class="basket__button"
+      @click="buy()"
+    >
+      Оформить за {{ getTotalPrice }}
+    </button>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   computed: {
     ...mapState(['basket', 'total']),
+    ...mapGetters(['getTotalPrice'])
   },
   methods: {
     incNumber(uid) {
@@ -48,16 +56,19 @@ export default {
     decNumber(uid) {
       this.$store.commit('decNumber', uid);
     },
-	  decreaseNumber(pos) {
-		  if(pos.number > 0) {
-			  pos.number--;
-		  }
-	  },
-	  increaseNumber(pos) {
-		  if(pos.number < 100) {
-			 pos.number++;
-		  }
-	  }
+    buy() {
+      let fulSum = "";
+      for(let i = 0; i < this.basket.length; i++) {
+        fulSum +=
+        "Позиция " + (i + 1) +
+        "\nНаименование - " + this.basket[i].dish +
+        "\nЦена за шт - " + this.basket[i].price + " руб" +
+        "\nКолличество - " + this.basket[i].number + " шт" +
+        "\nЦена за все - " +(this.basket[i].price * this.basket[i].number) + " руб" +
+        "\n\n";
+      }
+      alert(fulSum + "\n" + "Сумма покупки - " +this.total);
+    }
   }
 }
 </script>
@@ -67,7 +78,17 @@ export default {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	background: rgba(0, 0, 0, .1);
+}
+.basket__button {
+  margin-top: 20px;
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  color: rgb(255,255,255);
+  background: rgba(0, 0, 0, .3);
+  border: 1px solid rgba(0, 0, 0, .3);
+  border-radius: 10px;
+  cursor: pointer;
 }
 .position {
 	display: flex;
@@ -77,10 +98,18 @@ export default {
 	height: 200px;
 	width: 1360px;
 }
-
 .position__image {
   margin-left: 50px;
   height: 150px;
+}
+.position__dish {
+  width: 700px;
+}
+.position__changeNumber {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 120px;
 }
 .position__number {
   margin-right: 50px;

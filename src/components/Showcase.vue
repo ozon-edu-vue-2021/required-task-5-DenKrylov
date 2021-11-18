@@ -70,4 +70,7 @@ export default {
 .card__button:hover {
   cursor: pointer;
 }
+.card__button:active {
+  background: rgb(0, 128, 0);
+}
 </style>

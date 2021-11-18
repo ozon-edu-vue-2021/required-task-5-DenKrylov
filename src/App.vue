@@ -10,9 +10,8 @@
       </h1>
       <button 
         class="header__button"
-        @click="multiButton()">
-        <img v-i=""
-          src="/assets/ico/shopping_cart_white_24dp.svg"
+        @click="isStore = !isStore">
+        <img
           v-bind:alt="showTotal()"
         >
       </button>
@@ -22,7 +21,6 @@
       <Basket v-if="!isStore" />
       <Showcase v-else />
     </div>
-    <!-- <div>{{ basket }}</div> -->
   </div>
 </template>
 
@@ -42,8 +40,7 @@ export default {
     Basket,
   },
   computed: {
-    // ...mapState(['url', 'data', 'basket, writeData()']),
-    ...mapState(['url', 'data', 'basket', 'total'])
+    ...mapState(['url', 'data', 'basket', 'total']),
   },
   data() {
     return {
@@ -54,31 +51,13 @@ export default {
     async loadData() {
       const res = await axios.get(this.url);
       this.$store.commit('writeData', res.data);
-      console.log(this.data);
     },
     showTotal() {
       if(this.isStore) {
-        return 'Корзина'
+        return "Корзина";
       }
-      return 'Купить за ' + this.total;
+      return "В магазин";
     },
-    multiButton() {
-      let fulSum = "";
-      if(this.isStore) {
-        this.isStore = !this.isStore;
-      } else {
-        for(let i = 0; i < this.basket.length; i++) {
-          fulSum +=
-          "Позиция " + (i + 1) +
-          "\nНаименование - " + this.basket[i].dish +
-          "\nЦена за шт - " + this.basket[i].price + " руб" +
-          "\nКолличество - " + this.basket[i].number + " шт" +
-          "\nЦена за все - " +(this.basket[i].price * this.basket[i].number) + " руб" +
-          "\n\n";
-        }
-        alert(fulSum + "\n" + "Сумма покупки - " +this.total);
-      }
-    }
   }
 }
 </script>
@@ -120,14 +99,16 @@ body,
   width: 1500px;
 }
 .header__button {
+  width: 100px;
+  border: 1px solid rgb(255, 255, 255);
   color: rgb(255, 255, 255);
   background: none;
-  border: none;
-  width: 100px;
+  border-radius: 10px;
   cursor: pointer;
 }
 .header__button:hover {
-  color: rgb(0, 128, 0)
+  color: rgb(0, 128, 0);
+  border: 1px solid rgb(0, 128, 0);
 }
 .app__body {
   flex: 1 0 auto;

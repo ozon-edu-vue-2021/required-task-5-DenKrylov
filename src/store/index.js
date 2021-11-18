@@ -12,6 +12,10 @@ export default new Vuex.Store({
   },
   getters: {
     getTotalPrice: (state) => {
+      state.total = 0;
+      for(let i = 0; i < state.basket.length; i++) {
+        state.total += state.basket[i].price * state.basket[i].number;
+      }
       return state.total;
     }
   },
