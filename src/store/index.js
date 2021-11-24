@@ -42,8 +42,7 @@ export default new Vuex.Store({
     incNumber: (state, uid) => {
       state.total = 0;
       for(let i = 0; i < state.basket.length; i++) {
-        if(uid === state.basket[i].uid &&
-          state.basket[i].number < 100 ) {
+        if(uid === state.basket[i].uid) {
             state.basket[i].number++;
           }
           state.total += state.basket[i].number * state.basket[i].price;
