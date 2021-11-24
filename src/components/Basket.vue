@@ -47,7 +47,7 @@ import { mapGetters, mapState } from 'vuex';
 export default {
   computed: {
     ...mapState(['basket', 'total']),
-    ...mapGetters(['getTotalPrice'])
+    ...mapGetters(['getTotalPrice']),
   },
   methods: {
     incNumber(uid) {

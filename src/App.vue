@@ -10,7 +10,7 @@
       </h1>
       <button 
         class="header__button"
-        @click="isStore = !isStore">
+        @click="transition()">
         <p v-if="isStore">Корзина</p>
         <p v-else>В магазин</p>
       </button>
@@ -26,7 +26,7 @@
 <script>
 import Showcase from "@/components/Showcase.vue"
 import Basket from "@/components/Basket.vue"
-import { mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import axios from 'axios';
 
 export default {
@@ -40,6 +40,7 @@ export default {
   },
   computed: {
     ...mapState(['url', 'data', 'basket', 'total']),
+    ...mapMutations(['countPrice'])
   },
   data() {
     return {
@@ -47,6 +48,10 @@ export default {
     }
   },
   methods: {
+    transition () {
+      this.isStore = !this.isStore;
+      this.countPrice;
+    },
     async loadData() {
       const res = await axios.get(this.url);
       this.$store.commit('writeData', res.data);
